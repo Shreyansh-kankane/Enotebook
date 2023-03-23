@@ -1,15 +1,15 @@
-import { connect } from 'mongoose';
+import mongoose from 'mongoose'
 
 const mongoURI = "mongodb+srv://gopal:gopal420@cluster0.lwnmdxo.mongodb.net/test"
 
+mongoose.set('strictQuery', false)
 const connectToMongo = ()=>{
     console.log("connection Building with DB");
-    connect(mongoURI,()=>{
+    mongoose.set('strictQuery', false)
+    mongoose.connect(mongoURI,()=>{
         console.log("Connected to mongo successfully");
     });
-
 }
 
 export default connectToMongo;
 
-// const mongoURI = "mongodb://localhost:27017"
