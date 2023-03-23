@@ -1,4 +1,4 @@
-const jwt=require('jsonwebtoken');
+import { verify } from 'jsonwebtoken';
 const JWT_SECRET = 'helloAbhi';
 
 const fetchuser=(req,res,next)=>{
@@ -8,7 +8,7 @@ const fetchuser=(req,res,next)=>{
         res.status(401).send({error: "Please authenticate a valid token"})
     }
     try {
-        const data=jwt.verify(token,JWT_SECRET);
+        const data=verify(token,JWT_SECRET);
         req.user=data.user;
         next();
     } catch (error) {
@@ -16,4 +16,4 @@ const fetchuser=(req,res,next)=>{
     }  
 };
 
-module.exports = fetchuser;
+export default fetchuser;

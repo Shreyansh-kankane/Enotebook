@@ -1,13 +1,14 @@
-const express = require('express');
-const router = express.Router();
-const User = require('../models/User');
-const bcrypt = require('bcryptjs');
-const jwt=require('jsonwebtoken');
-const { body, validationResult } = require('express-validator');
 
-const { validate } = require('../models/User');
+import express from 'express';
+const router = express.Router();
+import User from '../models/User.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { body, validationResult } from 'express-validator';
+
+// const { validate } = require('../models/User');
 const JWT_SECRET = 'helloAbhi';
-const fetchuser=require('../middleware/fetchuser');
+import fetchuser from '../middleware/fetchuser.js'
 
 // ROUTE -1: create a user using: POST "/api/auth/createuser" Doesnot req auth
 router.post('/createuser',[
@@ -109,6 +110,14 @@ router.post('/getuser',fetchuser, async (req,res)=>{
 
 });
 
-module.exports = router;
+export default router;
+
+// module.exports = router;
+// const express = require('express');
+// const router = express.Router();
+// const User = require('../models/User');
+// const bcrypt = require('bcryptjs');
+// const jwt=require('jsonwebtoken');
+// const { body, validationResult } = require('express-validator');
 
 

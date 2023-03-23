@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const Notes = require('../models/Notes');
-const { body, validationResult } = require('express-validator');
-const fetchuser = require('../middleware/fetchuser');
+import Notes from '../models/Notes.js';
+import { body, validationResult } from 'express-validator';
+import fetchuser from '../middleware/fetchuser.js';
 
 // ROUTE 1: Get all the notes GET "/api/auth/fetchallnotes" Login required
 router.get('/fetchallnotes', fetchuser, async (req, res) => {
@@ -96,4 +96,11 @@ router.delete('/deletenote/:id', fetchuser, async (req, res) => {
     }
 });
 
-module.exports = router
+export default router;
+
+// module.exports = router
+// const express = require('express');
+// const router = express.Router();
+// const Notes = require('../models/Notes');
+// const { body, validationResult } = require('express-validator');
+// const fetchuser = require('../middleware/fetchuser');
