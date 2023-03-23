@@ -4,6 +4,6 @@
     "jsonwebtoken": "^9.0.0"
   },
   "scripts": {
-    "start": "nodemon Backend/index.js"
+    "start": "node Backend/index.js"
   }
 }
