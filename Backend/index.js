@@ -1,4 +1,3 @@
-
 import connectToMongo from './db.js';
 import express from 'express';
 import cors from 'cors';
@@ -7,7 +6,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 5000;
 
 const app=express();
 app.use(cors());
@@ -27,14 +26,7 @@ console.log(process.env.NODE_ENV);
 console.log(process.env.PORT);
 
 if(process.env.NODE_ENV === 'production'){
-    console.log("inside prduction ")
-    app.use(express.static(path.join(__mydirname,'/../Frontend/build')))
-    app.get('*',(req,res)=>{
-        res.sendFile(path.resolve(__mydirname,'..','Frontend','build','index.html'));
-    });
-
-} else{
-    app.get("/",(req,res)=>{
+        app.get("/",(req,res)=>{
         res.send("I am running");
     })
 }
@@ -42,13 +34,3 @@ if(process.env.NODE_ENV === 'production'){
 app.listen(port,()=>{
     console.log(`Server is running in :${process.env.NODE_ENV} mode on port ${port}`)
 });
-
-// const connectToMongo = require('./db')
-// const express = require('express')
-// const cors = require('cors');
-// const path = require("path")
-// const env = require("dotenv").config();
-
-// app.use('/api/auth',require('./routes/auth').default)
-// app.use('/api/notes',require('./routes/notes').default)
-// console.log("my new path",__mydirname);
