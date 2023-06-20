@@ -1,10 +1,12 @@
 import React ,{useState,useContext} from 'react'
 import { useNavigate } from 'react-router-dom'
 import AlertContext from '../context/alert/AlertContext'
+import { toast } from 'react-hot-toast'
+
+import { BASE_URI } from '../helper'
 
 const Signup = (props) => {
-    // console.log("sign in ",process.env.host )
-    // const h = 'localhost:5000'
+
     const {showAlert} = useContext(AlertContext);
 
     const [credential,setCredential] = useState({name:"",email:"",password:"",cpassword:""});
@@ -21,9 +23,11 @@ const Signup = (props) => {
         // API Call for creating new user
         if(credential.password !== credential.cpassword ){
             // alert("Incorrect password")
-            showAlert("Please re-enter password correctly", "danger")
+            // showAlert("Please re-enter password correctly", "danger")
+            toast.error("password not match");
+            return;
         }
-        const response = await fetch(`http://localhost:5000/api/auth/createuser`, {
+        const response = await fetch(`${BASE_URI}/api/auth/createuser`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -33,12 +37,14 @@ const Signup = (props) => {
         const json = await response.json();
         console.log(json)
         if(json.Success) {
-            showAlert("Account created successfully", "success")
+            // showAlert("Account created successfully", "success")
+            toast.success("Account created successfully");
             localStorage.setItem('token',json.authToken)
             navigate('/')
         }   
         else{
-            showAlert("Invalid details", "danger")
+            // showAlert("Invalid details", "danger")
+            toast.error("Invalid details !");
         }
     }
     return (

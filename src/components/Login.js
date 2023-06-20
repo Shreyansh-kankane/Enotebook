@@ -1,7 +1,9 @@
 import React, {useContext, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import AlertContext from '../context/alert/AlertContext'
+import { toast } from 'react-hot-toast'
 
+import { BASE_URI } from '../helper'
 
 const Login = (props) => {
     const {showAlert} = useContext(AlertContext)
@@ -14,7 +16,7 @@ const Login = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch("http://localhost:5000/api/auth/login", {
+        const response = await fetch(`${BASE_URI}/api/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -25,12 +27,15 @@ const Login = (props) => {
         console.log(json);
         if (json.Success){
             // Save the auth token and redirect
-            showAlert("Loged-in Successfully", "success")
+            // showAlert("Loged-in Successfully", "success")
+            toast.success("Login Successfully");
             localStorage.setItem('token', json.authToken); 
             navigate('/');
         }
         else{
-            showAlert("Please enter correct credentials", "danger")
+            // showAlert("Please enter correct credentials", "danger")
+            toast.error("Please enter correct credentials");
+            return;
         }
     }
 

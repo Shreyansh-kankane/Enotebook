@@ -9,7 +9,7 @@ import Signup from './components/Signup';
 import React ,{useContext} from 'react'
 import Alert from './components/Alert';
 import AlertContext from './context/alert/AlertContext';
-
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   const {alert} = useContext(AlertContext);
@@ -19,6 +19,10 @@ function App() {
       <BrowserRouter>
       <NoteState>
           <Navbar/>
+          <Toaster
+            position="top-right"
+            reverseOrder={false}
+          />
           <Alert alert={alert}/>
           <div className='a'>
               <Routes>

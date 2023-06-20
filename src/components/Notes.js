@@ -30,7 +30,6 @@ const Notes = () => {
     };
     const handleUpdClick = (e)=>{
         // console.log("Updating the note...",enote);
-        showAlert("Note updated successfully","success")
         e.preventDefault(); 
         editnote(enote.id,enote.etitle,enote.edescription,enote.etag);
         closeRef.current.click();

@@ -21,9 +21,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/notes', notesRoutes);
 
 const __mydirname = path.resolve();
-console.log("MY dirname is", __mydirname)
-console.log(process.env.NODE_ENV);
-console.log(process.env.PORT);
+// console.log("MY dirname is", __mydirname)
+// console.log(process.env.NODE_ENV);
+// console.log(process.env.PORT);
 
 if(process.env.NODE_ENV === 'production'){
         app.get("/",(req,res)=>{

@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react'
 import NoteContext from "../context/notes/NoteContext"
 import AlertContext from '../context/alert/AlertContext';
 import Notes from './Notes';
+import { toast } from 'react-hot-toast';
 
 const AddNote = () => {
     // const context = useContext(NoteContext);
@@ -13,8 +14,9 @@ const AddNote = () => {
     const handleClick = (e)=>{
         e.preventDefault();
         addNote(note.title, note.description, note.tag);
-        showAlert("Add note successfully","success");
-        setNote({title: "", description: "", tag: ""})
+        // showAlert("Add note successfully","success");
+        // toast.success("Note added successfully");
+        setNote({title: "", description: "", tag: ""});
     }
 
     const onChange = (e)=>{
