@@ -1,4 +1,4 @@
-import React, {useEffect, useState,useContext} from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 // import AlertContext from '../context/alert/AlertContext'
@@ -8,22 +8,27 @@ import jwt_decode from 'jwt-decode';
 import userContext from '../context/user/userContext';
 import { BASE_URI } from '../helper'
 
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+
 const Login = (props) => {
 
-    const {setUser} = useContext(userContext);
+    const { setUser } = useContext(userContext);
     // global google
-    async function handleCallbackResponse(response){
+    async function handleCallbackResponse(response) {
         // console.log("encoded jwt, "+ response.credential);
         let userObj = jwt_decode(response.credential);
         setUser({ name: userObj.name, email: userObj.email, picture: userObj.picture });
-        localStorage.setItem('google-token', response.credential );
+        localStorage.setItem('google-token', response.credential);
 
-        const res= await fetch(`${BASE_URI}/api/auth/google/signIn`, {
+        const res = await fetch(`${BASE_URI}/api/auth/google/signIn`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({  name:userObj.name, email: userObj.email })
+            body: JSON.stringify({ name: userObj.name, email: userObj.email })
         });
         const json = await res.json();
         // console.log(json);
@@ -39,26 +44,28 @@ const Login = (props) => {
             return;
         }
     }
+    const client_id = process.env.GOOGLE_CLIENT_ID;
+    console.log(client_id);
 
-    useEffect(()=>{
+    useEffect(() => {
         window.google.accounts.id.initialize({
-            client_id: "649584767220-dfo3qk430e5nfoml28lgv2c8t56luc2r.apps.googleusercontent.com",
+            client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
             callback: handleCallbackResponse
         });
         window.google.accounts.id.renderButton(
             document.getElementById("signInDiv"),
-            {theme: "outline",size: "large"}
+            { theme: "outline", size: "large" }
         )
         window.google.accounts.id.prompt();
-    },[])
-    
+    }, [])
+
 
     // const {showAlert} = useContext(AlertContext)
-    const [credential, setCredential] = useState({email: "", password: ""}) 
+    const [credential, setCredential] = useState({ email: "", password: "" })
     let navigate = useNavigate();
 
-    const onChange = (e)=>{
-        setCredential({...credential, [e.target.name]: e.target.value});
+    const onChange = (e) => {
+        setCredential({ ...credential, [e.target.name]: e.target.value });
     }
 
     const handleSubmit = async (e) => {
@@ -69,19 +76,19 @@ const Login = (props) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({email: credential.email, password: credential.password})
+            body: JSON.stringify({ email: credential.email, password: credential.password })
         });
         const json = await response.json()
         // console.log(json);
-        if (json.Success){
+        if (json.Success) {
             // Save the auth token and redirect
             // showAlert("Loged-in Successfully", "success")
             toast.dismiss();
             toast.success("Login Successfully");
-            localStorage.setItem('token', json.authToken); 
+            localStorage.setItem('token', json.authToken);
             navigate('/');
         }
-        else{
+        else {
             // showAlert("Please enter correct credentials", "danger")
             toast.dismiss();
             toast.error("Please enter correct credentials");
@@ -102,13 +109,13 @@ const Login = (props) => {
                             <p className="lead fw-bold mb-0 me-3 mb-4">Sign in to e-notebook</p>
                             <div className="form-outline mb-4">
                                 <input type="email" id="form3Example3" className="form-control form-control-lg"
-                                    placeholder="Enter a valid email address" name='email' value={credential.email} onChange={onChange}/>
+                                    placeholder="Enter a valid email address" name='email' value={credential.email} onChange={onChange} />
                                 <label className="form-label" htmlFor="form3Example3">Email address</label>
                             </div>
-                            
+
                             <div className="form-outline mb-3">
                                 <input type="password" id="form3Example4" className="form-control form-control-lg"
-                                    placeholder="Enter password" name='password' value={credential.password} onChange={onChange}/>
+                                    placeholder="Enter password" name='password' value={credential.password} onChange={onChange} />
                                 <label className="form-label" htmlFor="form3Example4">Password</label>
                             </div>
 
@@ -125,7 +132,7 @@ const Login = (props) => {
 
                             <div className="text-center text-lg-start mt-4 pt-2">
                                 <button type="submit" className="btn btn-primary btn-lg"
-                                    style={{ paddingRight:"2.5rem",paddingLeft: "2.5rem" }}>Login
+                                    style={{ paddingRight: "2.5rem", paddingLeft: "2.5rem" }}>Login
                                 </button>
                             </div>
 
