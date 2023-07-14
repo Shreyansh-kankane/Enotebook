@@ -1,12 +1,12 @@
 import React, {useContext, useState} from 'react'
 import NoteContext from "../context/notes/NoteContext"
-import AlertContext from '../context/alert/AlertContext';
+// import AlertContext from '../context/alert/AlertContext';
 import Notes from './Notes';
 import { toast } from 'react-hot-toast';
 
 const AddNote = () => {
     // const context = useContext(NoteContext);
-    const {showAlert} = useContext(AlertContext);
+    // const {showAlert} = useContext(AlertContext);
     const {addNote} = useContext(NoteContext);
 
     const [note, setNote] = useState({title: "", description: "", tag: ""})
@@ -15,7 +15,7 @@ const AddNote = () => {
         e.preventDefault();
         addNote(note.title, note.description, note.tag);
         // showAlert("Add note successfully","success");
-        // toast.success("Note added successfully");
+        toast.success("Note added successfully");
         setNote({title: "", description: "", tag: ""});
     }
 
@@ -25,7 +25,7 @@ const AddNote = () => {
     return (
         <>
         <div className="container my-3">
-            <h2>Add a Note</h2>
+            <h2>Add Notes</h2>
             <form className="my-3">
                 <div className="mb-3">
                     <label htmlFor="title" className="form-label">Title</label>

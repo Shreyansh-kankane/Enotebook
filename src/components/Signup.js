@@ -1,13 +1,13 @@
-import React ,{useState,useContext} from 'react'
+import React ,{useState} from 'react'
 import { useNavigate } from 'react-router-dom'
-import AlertContext from '../context/alert/AlertContext'
+// import AlertContext from '../context/alert/AlertContext'
 import { toast } from 'react-hot-toast'
 
 import { BASE_URI } from '../helper'
 
 const Signup = (props) => {
 
-    const {showAlert} = useContext(AlertContext);
+    // const {showAlert} = useContext(AlertContext);
 
     const [credential,setCredential] = useState({name:"",email:"",password:"",cpassword:""});
     let navigate = useNavigate();

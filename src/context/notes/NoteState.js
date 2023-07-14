@@ -1,13 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import NoteContext from "./NoteContext";
-import AlertContext from "../alert/AlertContext";
+// import AlertContext from "../alert/AlertContext";
 import { toast } from "react-hot-toast";
 
 import { BASE_URI } from "../../helper";
 
 const NoteState = (props) => {
 
-    const {showAlert} = useContext(AlertContext)
+    // const {showAlert} = useContext(AlertContext)
     const notesInitial = [];
     const [notes,setNotes] = useState(notesInitial);
 
@@ -50,7 +50,8 @@ const NoteState = (props) => {
 
      // edit an existing note
      const editnote = async (id,title,description,tag)=>{
-        const response = await fetch(`${BASE_URI}/api/notes/updatenote/${id}`, {
+      //  const response = await fetch(`${BASE_URI}/api/notes/updatenote/${id}`, {  // to catch the response
+        await fetch(`${BASE_URI}/api/notes/updatenote/${id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -58,8 +59,8 @@ const NoteState = (props) => {
             },
             body: JSON.stringify({title,description,tag})
           });
-          const json = await response.json();
-          console.log(json)
+          // const json = await response.json();
+          // console.log(json)
 
           let newNotes = JSON.parse(JSON.stringify(notes));
 
@@ -80,15 +81,15 @@ const NoteState = (props) => {
     // for deleting a note
     const deletenote = async (id)=>{
         // Api call to delete note with this id
-        const response = await fetch(`${BASE_URI}/api/notes/deletenote/${id}`, {
+        await fetch(`${BASE_URI}/api/notes/deletenote/${id}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
               'auth-token': localStorage.getItem('token')
             },
           });
-          const json = await response.json();
-          console.log(json)
+          // const json = await response.json();
+          // console.log(json)
 
         const newNotes = notes.filter((note)=>{return note._id!==id})
         setNotes(newNotes);

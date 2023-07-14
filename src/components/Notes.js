@@ -1,13 +1,13 @@
 import React, {useContext,useEffect,useRef,useState} from 'react'
 import NoteContext from "../context/notes/NoteContext"
-import AlertContext from '../context/alert/AlertContext';
+// import AlertContext from '../context/alert/AlertContext';
 import Noteitem from './Noteitem';
 import { useNavigate } from 'react-router-dom';
 
 const Notes = () => {
 
     const {notes,getNotes,editnote} = useContext(NoteContext);
-    const {showAlert} = useContext(AlertContext);
+    // const {showAlert} = useContext(AlertContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,7 +17,6 @@ const Notes = () => {
         else{
             navigate('/login')
         }
-        // eslint-disable-next-line
     }, []);
 
     const ref = useRef(null);
@@ -69,7 +68,7 @@ const Notes = () => {
                         </div>
                         <div className="modal-footer">
                             <button ref={closeRef} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button  disabled={enote.etitle.length<3 || enote.edescription.length<5} onClick={handleUpdClick} type="button" className="btn btn-primary">Update Note</button>
+                            <button  disabled={enote.etitle.length<2 || enote.edescription.length<2 } onClick={handleUpdClick} type="button" className="btn btn-primary">Update Note</button>
                         </div>
                     </div>
                 </div>

@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast';
 function Navbar() {
   let location = useLocation();
   const navigate = useNavigate();
-  const handleLogout =()=>{
+  const handleLogout = () => {
     toast.success("Logout successfully")
     localStorage.removeItem('token')
     navigate('/login')
@@ -16,23 +16,23 @@ function Navbar() {
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">Enoteebook</Link>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="/navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link className={`nav-link ${location.pathname==="/"? "active": ""}`} aria-current="page" to="/">Home</Link>
-              </li>
-              <li className="nav-item">
-                <Link className={`nav-link ${location.pathname==="/about"? "active": ""}`} to="about">About</Link>
-              </li>
-            </ul>
-            {!localStorage.getItem('token') ? <form className='d-flex'>
-              <Link className="btn btn-primary mx-2" to="/login" role="button">Login</Link>
-              <Link className='btn btn-secondary mx-2'to="/SignUp" role="button">Sign Up</Link>
-            </form>: <button className='btn btn-primary mx-3' onClick={handleLogout}>Logout</button> }
+          <div className='d-flex col w-25justify-content-around align-items-center'>
+            <Link className="navbar-brand font-weight-bold mx-2" to="/">e-noteebook</Link>
+            <Link className={`nav-link text-white mx-2 ${location.pathname === "/" ? "active" : ""}`} aria-current="page" to="/">Home</Link>
+            <Link className={`nav-link text-white mx-2 ${location.pathname === "/about" ? "active" : ""}`} to="about">About</Link>
+          </div>
+          <div className='d-flex justify-content-end'>
+            {!localStorage.getItem('token') ?
+              <form className='d-flex'>
+                {location.pathname === "/login" ?
+                  <Link className='btn btn-primary mx-2' to="/SignUp" role="button">Sign Up</Link>
+                  :
+                  <Link className="btn btn-primary mx-2" to="/login" role="button">Login</Link>
+                }
+              </form>
+              :
+              <button className='btn btn-primary mx-3' onClick={handleLogout}>Logout</button>
+            }
           </div>
         </div>
       </nav>
