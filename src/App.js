@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import About from './components/About';
 import Home from './components/Home';
 import NoteState from './context/notes/NoteState';
+import UserState from './context/user/userState';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import React ,{useContext} from 'react'
@@ -17,6 +18,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+      <UserState>
       <NoteState>
           <Navbar/>
           <Toaster
@@ -33,6 +35,7 @@ function App() {
               </Routes>
           </div>
       </NoteState>
+      </UserState>
       </BrowserRouter>
     
     </>

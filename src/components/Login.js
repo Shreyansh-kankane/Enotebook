@@ -1,12 +1,58 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState,useContext} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 // import AlertContext from '../context/alert/AlertContext'
 import { toast } from 'react-hot-toast'
+import jwt_decode from 'jwt-decode';
 
+import userContext from '../context/user/userContext';
 import { BASE_URI } from '../helper'
 
 const Login = (props) => {
+
+    const {setUser} = useContext(userContext);
+    // global google
+    async function handleCallbackResponse(response){
+        // console.log("encoded jwt, "+ response.credential);
+        let userObj = jwt_decode(response.credential);
+        setUser({ name: userObj.name, email: userObj.email, picture: userObj.picture });
+        localStorage.setItem('google-token', response.credential );
+
+        const res= await fetch(`${BASE_URI}/api/auth/google/signIn`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({  name:userObj.name, email: userObj.email })
+        });
+        const json = await res.json();
+        // console.log(json);
+        if (json.authToken) {
+            toast.dismiss();
+            toast.success("Login Successfully");
+            localStorage.setItem('token', json.authToken);
+            navigate('/');
+        }
+        else {
+            toast.dismiss();
+            toast.error("error when signin");
+            return;
+        }
+    }
+
+    useEffect(()=>{
+        window.google.accounts.id.initialize({
+            client_id: "649584767220-dfo3qk430e5nfoml28lgv2c8t56luc2r.apps.googleusercontent.com",
+            callback: handleCallbackResponse
+        });
+        window.google.accounts.id.renderButton(
+            document.getElementById("signInDiv"),
+            {theme: "outline",size: "large"}
+        )
+        window.google.accounts.id.prompt();
+    },[])
+    
+
     // const {showAlert} = useContext(AlertContext)
     const [credential, setCredential] = useState({email: "", password: ""}) 
     let navigate = useNavigate();
@@ -17,6 +63,7 @@ const Login = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        toast.loading("loading...");
         const response = await fetch(`${BASE_URI}/api/auth/login`, {
             method: 'POST',
             headers: {
@@ -29,12 +76,14 @@ const Login = (props) => {
         if (json.Success){
             // Save the auth token and redirect
             // showAlert("Loged-in Successfully", "success")
+            toast.dismiss();
             toast.success("Login Successfully");
             localStorage.setItem('token', json.authToken); 
             navigate('/');
         }
         else{
             // showAlert("Please enter correct credentials", "danger")
+            toast.dismiss();
             toast.error("Please enter correct credentials");
             return;
         }
@@ -45,7 +94,7 @@ const Login = (props) => {
             <div className="container-fluid h-100">
                 <div className="h-100 w-100 row d-flex justify-content-center align-items-center ">
                     <div className="col-md-9 col-lg-6 col-xl-5">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                        <img src="draw2.webp"
                             className="img-fluid" alt="" />
                     </div>
                     <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
@@ -86,7 +135,7 @@ const Login = (props) => {
 
                             <div className="d-flex flex-row align-items-center justify-content-center ">
                                 <p className="lead fw-normal mb-0 me-3">Sign in with</p>
-                                <button type="button" className="btn btn-primary btn-floating mx-1">
+                                {/* <button type="button" className="btn btn-primary btn-floating mx-1">
                                     <i className="fab fa-facebook-f"></i>
                                 </button>
 
@@ -96,7 +145,8 @@ const Login = (props) => {
 
                                 <button type="button" className="btn btn-primary btn-floating mx-1">
                                     <i className="fab fa-linkedin-in"></i>
-                                </button>
+                                </button> */}
+                                <div id="signInDiv"></div>
                             </div>
                             <p className="small fw-bold mt-2 pt-1 mb-0 d-flex justify-content-center">Don't have an account? <Link to="/SignUp"
                                 className="link-danger">Register</Link></p>

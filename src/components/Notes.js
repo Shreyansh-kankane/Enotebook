@@ -10,9 +10,10 @@ const Notes = () => {
     // const {showAlert} = useContext(AlertContext);
     const navigate = useNavigate();
 
-    useEffect(() => {
+    useEffect( () => {
         if(localStorage.getItem('token')){
             getNotes();
+            
         }
         else{
             navigate('/login')
