@@ -18,7 +18,7 @@ const About = () => {
                                     </p>
                                     <p>e-Notebook offers features that further enhance its paper-friendly nature. Users can easily create, edit, and organize digital notes, ensuring a clutter-free experience. The application provides options to categorize, tag and Users can also synchronize their e-notebook across devices, allowing access to their digital notes from smartphones, tablets, or computers, reducing the need for multiple physical notebooks.</p>
 
-                                    <Link href="/" className="btn btn-primary btn-lg btn-block">Home</Link>
+                                    <Link to="/" className="btn btn-primary btn-lg btn-block">Home</Link>
                             </div>
                         </div>
                     </div>
