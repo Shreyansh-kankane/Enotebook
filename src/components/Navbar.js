@@ -25,9 +25,9 @@ function Navbar() {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <div className='d-flex col w-25justify-content-around align-items-center'>
-            <Link className="navbar-brand font-weight-bold mx-2" to="/">e-noteebook</Link>
+            <Link className="nav-link text-white fw-bold mr-1" to="/">e-notes</Link>
             <Link className={`nav-link text-white mx-2 ${location.pathname === "/" ? "active" : ""}`} aria-current="page" to="/">Home</Link>
-            <Link className={`nav-link text-white mx-2 ${location.pathname === "/about" ? "active" : ""}`} to="about">About</Link>
+            <Link className={`nav-link text-white mx-1 ${location.pathname === "/about" ? "active" : ""}`} to="about">About</Link>
           </div>
           <div className='d-flex justify-content-end align-items-center'>
             {!localStorage.getItem('token') ?
@@ -35,13 +35,13 @@ function Navbar() {
                 {location.pathname === "/login" ?
                   <Link className='btn btn-primary mx-2' to="/SignUp" role="button">Sign Up</Link>
                   :
-                  <Link className="btn btn-primary mx-2" to="/login" role="button">Login</Link>
+                  <Link className="btn-sm btn-primary mx-1" to="/login" role="button">Login</Link>
                 }
               </form>
               :
               <>
                 <img src={user.picture} className='rounded-circle shadow-4-strong img-cover' style={{height:"30px",width:"30px"}} alt="" />
-                <button className='btn btn-primary mx-3' onClick={handleLogout}>Logout</button>
+                <button className='btn btn-primary mx-2' onClick={handleLogout}>Logout</button>
               </>
             }
           </div>
