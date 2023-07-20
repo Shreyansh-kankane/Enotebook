@@ -29,9 +29,9 @@ function App() {
           <div className='a'>
               <Routes>
                 <Route exact path='/' element={<Home/>}/>
-                <Route exact path='about' element={<About/>}/>  
-                <Route exact path='login' element={<Login />} />  
-                <Route exact path='SignUp' element={<Signup />} />  
+                <Route path='/about' element={<About/>}/>  
+                <Route path='/login' element={<Login />} />  
+                <Route path='/SignUp' element={<Signup />} />  
               </Routes>
           </div>
       </NoteState>

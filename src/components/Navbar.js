@@ -35,7 +35,7 @@ function Navbar() {
                 {location.pathname === "/login" ?
                   <Link className='btn btn-primary mx-2' to="/SignUp" role="button">Sign Up</Link>
                   :
-                  <Link className="btn-sm btn-primary mx-1" to="/login" role="button">Login</Link>
+                  <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link>
                 }
               </form>
               :

@@ -44,8 +44,8 @@ const Login = (props) => {
             return;
         }
     }
-    const client_id = process.env.GOOGLE_CLIENT_ID;
-    console.log(client_id);
+    
+    // console.log(client_id);
 
     useEffect(() => {
         window.google.accounts.id.initialize({
